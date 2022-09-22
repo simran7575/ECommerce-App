@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
@@ -21,6 +21,7 @@ import { CustomStyles } from "../../constants/CustomStyles";
 import CreateProductForm from "./createProductComponents/CreateProductForm";
 import NoInternetScreen from "../../components/NoInternetScreen";
 import NetInfo from "@react-native-community/netinfo";
+import { FavouritesContext } from "../../context/favourites-context";
 
 // create a component
 function CreateProduct({ route }) {
@@ -32,10 +33,11 @@ function CreateProduct({ route }) {
     image: true,
   });
   const [connectionStatus, setConnectionStatus] = useState(false);
+  const favouriteCtx = useContext(FavouritesContext);
 
   const navigation = useNavigation();
 
-  let categories = route.params.categories;
+  let categories = favouriteCtx.user.categories;
   let newCat = categories.filter((item) => {
     return item._id != "10";
   });
@@ -79,6 +81,7 @@ function CreateProduct({ route }) {
         parseInt(price, 10);
 
         const response = await createNewProduct(
+          favouriteCtx.user.token,
           title,
           price,
           category,

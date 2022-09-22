@@ -40,9 +40,9 @@ const Favourite = ({ navigation }) => {
         </View>
       </View>
 
-      {favouriteCtx.favourites.length != 0 ? (
+      {favouriteCtx.user.favourites.length != 0 ? (
         <View style={CustomStyles.productContainer}>
-          <ProductItemsList products={favouriteCtx.favourites} />
+          <ProductItemsList products={favouriteCtx.user.favourites} />
         </View>
       ) : (
         <View style={{ flex: 1 }}>

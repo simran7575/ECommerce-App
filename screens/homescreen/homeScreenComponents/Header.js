@@ -36,6 +36,7 @@ const Header = ({ children, categories, selectCategory, selectedItem }) => {
             data={categories}
             selectCategory={selectCategory}
             selectedItem={selectedItem}
+            image
           />
         </View>
       </View>

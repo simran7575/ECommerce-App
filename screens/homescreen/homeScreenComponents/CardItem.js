@@ -1,9 +1,9 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import { Colors } from "../../../constants/CustomColor";
 import { CustomStyles } from "../../../constants/CustomStyles";
 
 // create a component
-const CardItem = ({ data, selectedItem, selectCategory }) => {
+const CardItem = ({ data, selectedItem, selectCategory, image }) => {
   const isSelected = selectedItem == data.name;
   return (
     <View style={CustomStyles.cardItemContainer}>
@@ -15,6 +15,14 @@ const CardItem = ({ data, selectedItem, selectCategory }) => {
             !isSelected && styles.unfocuseddateContainer,
           ]}
         >
+          {image && (
+            <View style={CustomStyles.categoryImageContainer}>
+              <Image
+                source={{ uri: data.image }}
+                style={CustomStyles.categoryImage}
+              />
+            </View>
+          )}
           <Text
             style={[
               isSelected && styles.focusedtext,
@@ -32,7 +40,7 @@ const CardItem = ({ data, selectedItem, selectCategory }) => {
 // define your styles
 const styles = StyleSheet.create({
   text: {
-    fontSize: 13,
+    fontSize: 12,
     color: Colors.lightBlack,
     fontFamily: "poppins-regular",
     textAlignVertical: "center",
@@ -40,7 +48,7 @@ const styles = StyleSheet.create({
   },
 
   dateContainer: {
-    marginTop: 24,
+    marginTop: 18,
     borderRadius: 7,
     justifyContent: "center",
     alignItems: "center",
@@ -48,11 +56,11 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
   },
   unfocuseddateContainer: {
-    borderColor: Colors.gray2,
-    borderWidth: 2,
+    // borderColor: Colors.gray2,
+    // borderWidth: 2,
   },
   focusedtext: {
-    fontSize: 13,
+    fontSize: 12,
     color: Colors.white,
     fontFamily: "poppins-regular",
     textAlignVertical: "center",
@@ -60,6 +68,7 @@ const styles = StyleSheet.create({
   },
   focuseddateContainer: {
     backgroundColor: Colors.pink,
+    borderRadius: 7,
   },
 });
 

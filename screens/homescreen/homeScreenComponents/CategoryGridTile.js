@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { useContext, useEffect } from "react";
+import { memo, useContext, useEffect } from "react";
 import {
   View,
   Text,
@@ -17,12 +17,12 @@ import { FavouritesContext } from "../../../context/favourites-context";
 const CategoryGridTile = ({ item }) => {
   const favouriteCtx = useContext(FavouritesContext);
   // useEffect(() => { const isFavourite = favouriteCtx.favourites.includes(item);})
-  const isFavourite = favouriteCtx.favourites.find((element) => {
-    if (element._id === item._id) {
-      return true;
-    }
-    return false;
-  });
+  const isFavourite =
+    favouriteCtx.user.favourites.length != 0
+      ? favouriteCtx.user.favourites.find((element) => {
+          return element._id === item._id;
+        })
+      : false;
 
   const navigation = useNavigation();
 
@@ -114,4 +114,4 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default CategoryGridTile;
+export default memo(CategoryGridTile);

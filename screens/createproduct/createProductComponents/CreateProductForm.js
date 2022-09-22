@@ -22,7 +22,7 @@ const CreateProductForm = ({
   const [price, setPrice] = useState();
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
-  const [category, setCategory] = useState("Electronics");
+  const [category, setCategory] = useState("Clothing");
 
   const updateCategory = (name) => {
     updateInputValueHandler("category", name);

@@ -2,7 +2,7 @@ import { StyleSheet, FlatList } from "react-native";
 import CardItem from "./CardItem";
 
 // create a component
-const CategoryList = ({ data, selectedItem, selectCategory }) => {
+const CategoryList = ({ data, selectedItem, selectCategory, image }) => {
   return (
     <FlatList
       horizontal={true}
@@ -16,6 +16,7 @@ const CategoryList = ({ data, selectedItem, selectCategory }) => {
           data={item.item}
           selectedItem={selectedItem}
           selectCategory={selectCategory}
+          image={image}
         />
       )}
     />

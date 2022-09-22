@@ -1,12 +1,20 @@
+import { useState } from "react";
 import { StyleSheet, FlatList } from "react-native";
 import { CustomStyles } from "../../../constants/CustomStyles";
 import CategoryGridTile from "./CategoryGridTile";
 
 // create a component
-const ProductItemsList = ({ products }) => {
+const ProductItemsList = ({ products, render }) => {
+  const [isFetching, setIsFetching] = useState(false);
   function renderCategoryItem(itemData) {
     return <CategoryGridTile item={itemData.item} />;
   }
+
+  const onRefresh = () => {
+    setIsFetching(true);
+    render();
+    setIsFetching(false);
+  };
 
   return (
     <FlatList
@@ -17,6 +25,8 @@ const ProductItemsList = ({ products }) => {
       initialNumToRender={7}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={CustomStyles.bottomPaddingInList}
+      onRefresh={onRefresh}
+      refreshing={isFetching}
     />
   );
 };

@@ -16,7 +16,7 @@ import { FavouritesContext } from "../../context/favourites-context";
 function ProductDetails({ navigation, route }) {
   const item = route.params.item;
   const favouriteCtx = useContext(FavouritesContext);
-  const isFavourite = favouriteCtx.favourites.find((element) => {
+  const isFavourite = favouriteCtx.user.favourites.find((element) => {
     if (element._id === item._id) {
       return true;
     }
