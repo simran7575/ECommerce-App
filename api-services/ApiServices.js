@@ -135,7 +135,7 @@ export function validatePrice(price) {
   return letters.test(price);
   //email.match(letters);
 }
-export function validateImage(image) {
+export async function validateImage(image) {
   if (!image) {
     return false;
   }
@@ -143,13 +143,23 @@ export function validateImage(image) {
   if (!image) {
     return false;
   }
-  var http = new XMLHttpRequest();
 
-  http.open("HEAD", image_url, false);
-  http.send();
+  async function checkImage(url) {
+    var request = new XMLHttpRequest();
+    await request.open("GET", url, true);
+    await request.send();
+    let status;
+    return (request.onload = function () {
+      status = request.status;
+      return request.status == 200;
+    });
 
-  return http.status != 404;
-  //return true;
+    // const res = await fetch(url);
+    // const buff = await res.blob();
+
+    // return buff.type.startsWith("image/");
+  }
+  return await checkImage(image);
 }
 export function validateEmail(email) {
   email = email.trim();

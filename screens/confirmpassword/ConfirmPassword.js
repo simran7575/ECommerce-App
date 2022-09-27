@@ -5,6 +5,7 @@ import {
   validatePassword,
 } from "../../api-services/ApiServices";
 import LoadingOverlay from "../../components/LoadingOverlay";
+import { CustomStrings } from "../../constants/CustomStrings";
 import { CustomStyles } from "../../constants/CustomStyles";
 import { FavouritesContext } from "../../context/favourites-context";
 import LabelInput from "../signupscreen/signupscreenComponents/LabelInput";
@@ -75,6 +76,7 @@ const ConfirmPassword = ({ navigation, route }) => {
         onChangeText={updatePasswordHandler}
         isValid={isPasswordValid}
         secure
+        message={CustomStrings.str16}
       />
       <LabelInput
         icon={"lock"}
@@ -83,6 +85,7 @@ const ConfirmPassword = ({ navigation, route }) => {
         onChangeText={updateConfirmPasswordHandler}
         isValid={isConfirmPasswordValid}
         secure
+        message={CustomStrings.str16}
       />
       <View style={CustomStyles.submitButtonOuter}>
         <Pressable

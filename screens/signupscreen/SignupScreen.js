@@ -7,6 +7,9 @@ import {
   Pressable,
   KeyboardAvoidingView,
   Alert,
+  Platform,
+  StatusBar,
+  Dimensions,
 } from "react-native";
 import {
   signUp,
@@ -82,8 +85,14 @@ const SignupScreen = () => {
 
   return (
     <KeyboardAvoidingView
-      style={CustomStyles.generalContainer}
+      style={{
+        height:
+          Platform.OS === "android"
+            ? Dimensions.get("window").height - StatusBar.currentHeight
+            : "100%",
+      }}
       behavior="height"
+      keyboardVerticalOffset={100}
     >
       <LogoContainer />
       <View style={CustomStyles.inputContainers}>

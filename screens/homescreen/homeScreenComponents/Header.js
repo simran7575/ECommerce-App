@@ -7,7 +7,13 @@ import { CustomStyles } from "../../../constants/CustomStyles";
 import CategoryList from "./CategoryList";
 
 // create a component
-const Header = ({ children, categories, selectCategory, selectedItem }) => {
+const Header = ({
+  children,
+  categories,
+  selectCategory,
+  selectedItem,
+  scrollToIndex,
+}) => {
   const navigation = useNavigation();
 
   const navigateToFavourites = () => {
@@ -37,6 +43,7 @@ const Header = ({ children, categories, selectCategory, selectedItem }) => {
             selectCategory={selectCategory}
             selectedItem={selectedItem}
             image
+            scrollToIndex={scrollToIndex}
           />
         </View>
       </View>

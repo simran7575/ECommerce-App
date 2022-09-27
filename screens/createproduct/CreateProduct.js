@@ -59,7 +59,8 @@ function CreateProduct({ route }) {
     const isTitleValid = validateNames(title);
     const isPriceValid = validatePrice(price);
     const isDescriptionValid = validateNames(description);
-    const isImageValid = validateImage(image);
+    const isImageValid = await validateImage(image);
+
     setProductIsvalid({
       title: isTitleValid,
       price: isPriceValid,
@@ -89,8 +90,9 @@ function CreateProduct({ route }) {
           image
         );
 
-        if (response.data.message == "Success") {
-          navigation.navigate("Home");
+        if (response.data.success) {
+          setIsLoading(false);
+          navigation.navigate("Home", { categry: category });
         } else {
           Alert.alert("Error!", " please try again later!");
           setIsLoading(false);

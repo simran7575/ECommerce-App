@@ -29,7 +29,7 @@ const VerificationScreen = ({ navigation, route }) => {
     setIsLoading(true);
     try {
       const response = await verifyOtp(otp);
-      console.log(response.data);
+
       if (response.data.success) {
         navigation.navigate("ConfirmPassword", { email });
       } else {

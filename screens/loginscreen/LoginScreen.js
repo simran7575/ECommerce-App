@@ -7,6 +7,9 @@ import {
   Pressable,
   KeyboardAvoidingView,
   Alert,
+  Platform,
+  StatusBar,
+  Dimensions,
 } from "react-native";
 import {
   login,
@@ -52,7 +55,6 @@ const LoginScreen = () => {
     setIsLoading(true);
     try {
       const response = await login(email, password);
-      console.log(response.data);
       if (response.data.success) {
         favouriteCtx.authenticate(response.data.token);
         favouriteCtx.addUserDetails(response.data.user);
@@ -74,8 +76,14 @@ const LoginScreen = () => {
 
   return (
     <KeyboardAvoidingView
-      style={CustomStyles.generalContainer}
+      style={{
+        height:
+          Platform.OS === "android"
+            ? Dimensions.get("window").height - StatusBar.currentHeight
+            : "100%",
+      }}
       behavior="height"
+      keyboardVerticalOffset={100}
     >
       <LogoContainer />
       <View style={CustomStyles.inputContainers}>

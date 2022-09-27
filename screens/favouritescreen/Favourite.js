@@ -11,7 +11,7 @@ const Favourite = ({ navigation }) => {
   const favouriteCtx = useContext(FavouritesContext);
 
   const navigateToHome = () => {
-    navigation.navigate("Home");
+    navigation.goBack();
   };
 
   //   if (favouriteCtx.favourites.length == 0) {

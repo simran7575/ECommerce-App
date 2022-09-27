@@ -56,8 +56,8 @@ function RenderCarousel() {
         itemWidth={ITEM_WIDTH}
         onSnapToItem={(index) => setIndex(index)}
         autoplay={true}
-        autoplayDelay={1000}
-        autoplayInterval={3000}
+        //autoplayDelay={1000}
+        autoplayInterval={1500}
       />
       <View style={styles.paginationContainer}>
         <Pagination

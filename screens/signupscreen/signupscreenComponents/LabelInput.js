@@ -13,6 +13,7 @@ const LabelInput = ({
   onChangeText,
   isValid,
   secure,
+  message,
 }) => {
   return (
     <View style={CustomStyles.labelcontainer}>
@@ -34,7 +35,9 @@ const LabelInput = ({
         />
       </View>
       {!isValid && (
-        <Text style={CustomStyles.error}>{`Invalid ${placeholder}`}</Text>
+        <Text style={CustomStyles.error}>
+          {message ? message : `Invalid ${placeholder}`}
+        </Text>
       )}
     </View>
   );

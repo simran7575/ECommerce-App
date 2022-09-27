@@ -1,6 +1,6 @@
 import { useIsFocused } from "@react-navigation/native";
 
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useCallback } from "react";
 import {
   View,
   Alert,
@@ -29,9 +29,9 @@ import RenderDealsList from "./homeScreenComponents/RenderDealsList";
 import { BestOfElectronics, LatestDealData } from "../../data/latestdeals";
 
 // create a component
-function HomeScreen() {
+function HomeScreen({ route }) {
   const [isLoading, setIsLoading] = useState(true);
-  const [isFetching, setIsFetching] = useState(false);
+
   const [productsList, setProductsList] = useState([]);
   const [allProductsList, setAllProductsList] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
@@ -42,30 +42,28 @@ function HomeScreen() {
 
   const isFocused = useIsFocused();
 
-  const changeFetchingMode = () => {
-    setIsFetching(!isFetching);
-  };
+  const createdCategory = route.params ? route.params.categry : null;
 
   const selectCategory = (name) => {
     setSelectedItem(name);
     if (name != "All") {
-      setIsLoading(true);
       const newProductList = allProductsList.filter((item) => {
         return item.category == name;
       });
 
       setProductsList(newProductList);
-      setIsLoading(false);
     } else {
-      setIsLoading(true);
-      setProductsList(allProductsList);
-      setIsLoading(false);
+      {
+        JSON.stringify(productsList) != JSON.stringify(allProductsList) &&
+          setProductsList(allProductsList);
+      }
     }
   };
 
   useEffect(() => {
     let cancel = false;
     async function loadAllProducts() {
+      setIsLoading(true);
       try {
         const response = await getAllProducts(favouriteCtx.user.token);
         if (cancel) {
@@ -73,9 +71,7 @@ function HomeScreen() {
         }
         if (response.data.success) {
           const reverseArray = response.data.products.reverse();
-          setAllProductsList(reverseArray);
-          setProductsList(reverseArray);
-          selectCategory(selectedItem);
+          setAllProductsList((prev) => [...reverseArray]);
           setIsLoading(false);
         } else {
           setShowNoProductScreen(true);
@@ -102,11 +98,20 @@ function HomeScreen() {
       cancel = true;
       unsubscribe;
     };
-  }, [isFocused, isFetching]);
+  }, [createdCategory]);
+
+  useEffect(() => {
+    {
+      !createdCategory && setProductsList(allProductsList);
+    }
+
+    selectCategory(createdCategory ? createdCategory : selectedItem);
+  }, [allProductsList]);
 
   useEffect(() => {
     let cancel = false;
     async function loadAllCategories() {
+      setIsLoading(true);
       try {
         const response = await getAllCategories(favouriteCtx.user.token);
         if (cancel) {
@@ -157,12 +162,18 @@ function HomeScreen() {
   if (!connectionStatus) {
     return <NoInternetScreen />;
   }
+
   return (
     <View style={styles.container}>
       <Header
         categories={categoryList}
         selectCategory={selectCategory}
         selectedItem={selectedItem}
+        scrollToIndex={
+          createdCategory
+            ? categoryList.findIndex((x) => x.name == createdCategory)
+            : categoryList.findIndex((x) => x.name == selectedItem)
+        }
       >
         {CustomStrings.str01}
       </Header>
@@ -204,10 +215,7 @@ function HomeScreen() {
         </SafeAreaView>
       ) : (
         <View style={CustomStyles.productContainer}>
-          <ProductItemsList
-            products={productsList}
-            render={changeFetchingMode}
-          />
+          <ProductItemsList products={productsList} />
         </View>
       )}
     </View>

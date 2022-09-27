@@ -22,7 +22,7 @@ const ForgotPassword = ({ navigation }) => {
     setIsLoading(true);
     try {
       const response = await forgotpassword(email);
-      console.log(response.data);
+
       if (response.data.success) {
         navigation.navigate("Verification", { email });
       } else {
