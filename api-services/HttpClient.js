@@ -1,6 +1,6 @@
 import axios from "axios";
 export let API = axios.create({
-  baseURL: `https://ecomm-app.onrender.com/api/v1`,
+  baseURL: `https://ecommerce-backend-oia2.onrender.com/api/v1`,
 });
 
 export async function getApi(endPoint, headers = null, query = null) {
